@@ -1,3 +1,26 @@
+const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
+const crypto = require('crypto');
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const moment = require('moment');
+moment.locale('es'); // Esto es para configurar el idioma en español
+const xlsx = require('xlsx');
+const multer = require('multer');
+const { v4: uuidv4 } = require('uuid');
+const Busboy = require('busboy');
+
+const { Storage } = require('@google-cloud/storage');
+const csvParser = require('csv-parser');
+const PdfPrinter = require('pdfmake')
+// Configura Multer para manejar la subida de archivos
+const upload = multer({ storage: multer.memoryStorage() });
+
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200
+}
+
 exports.deleteUser = async (req, res) => {
   cors(corsOptions)(req, res, async () => {
     const { userId } = req.params; // Se recibe el ID del usuario desde la URL
